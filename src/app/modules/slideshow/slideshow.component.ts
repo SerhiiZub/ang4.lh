@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Inject, Input, Output, PLATFORM_ID, Renderer2, ViewChild, DoCheck, NgZone, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, Output, PLATFORM_ID, Renderer2, ViewChild, AfterViewInit, DoCheck, NgZone, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 // import { SwipeService } from './swipe.service';
 import { isPlatformServer, DOCUMENT } from '@angular/common';
 import { ISlide } from './ISlide';
@@ -15,7 +15,7 @@ const FIRST_SLIDE_KEY = makeStateKey<any>('firstSlide');
   styleUrls: ['./slideshow.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SlideshowComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
+export class SlideshowComponent implements OnInit, DoCheck, OnChanges, OnDestroy, AfterViewInit {
   slideIndex: number = -1;
   slides: ISlide[] = [];
   hideLeftArrow: boolean = false;
@@ -61,7 +61,50 @@ export class SlideshowComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   @Output() onIndexChanged = new EventEmitter<number>();
   @Output() onImageLazyLoad = new EventEmitter<ISlide>();
 
-  @ViewChild('container', {static: false}) container: ElementRef;
+  @ViewChild('container', {static: false}) container : ElementRef;
+  ngAfterViewInit() {
+    // console.log(this.container.nativeElement.innerHTML);
+    // this.container.nativeElement.innerHTML = "DOM updated successfully!!!";
+    this._pointerService.bind(this.container);
+    // this.ngOnInit();
+    if (this.debug !== undefined) {
+      console.warn('[Deprecation Warning]: The debug input will be removed from ng-simple-slideshow in 1.3.0');
+    }
+    console.log(this.container);
+    this._pointerService.bind(this.container);
+    this._slideSub = this._pointerService.slideEvent.subscribe((indexDirection: number) => {
+      this.onSlide(indexDirection, true);
+    });
+    this._clickSub = this._pointerService.clickEvent.subscribe(() => {
+      this.onClick();
+    });
+    if (this.noLoop) {
+      this.hideLeftArrow = true;
+    }
+
+    if (this.imageUrls && this.imageUrls.length > 0) {
+      if (this._initial === true) {
+        this._urlCache = Array.from(this.imageUrls);
+      }
+
+      if (this._isHidden === true) {
+        this._renderer.removeStyle(this.container.nativeElement, 'display');
+        this._isHidden = false;
+      }
+
+      this.setSlides();
+    }
+    else if (this.hideOnNoSlides === true) {
+      this._renderer.setStyle(this.container.nativeElement, 'display', 'none');
+      this._isHidden = true;
+    }
+
+    this.setStyles();
+    this.handleAutoPlay();
+    this._pointerService.disableSwiping = this.disableSwiping;
+    this._pointerService.enableZoom = this.enableZoom;
+    this._pointerService.enablePan = this.enablePan;
+  }
   @ViewChild('prevArrow', {static: false}) prevArrow: ElementRef;
   @ViewChild('nextArrow', {static: false}) nextArrow: ElementRef;
 
@@ -81,19 +124,20 @@ export class SlideshowComponent implements OnInit, DoCheck, OnChanges, OnDestroy
   ) { }
 
   ngOnInit() {
-    if (this.debug !== undefined) {
-      console.warn('[Deprecation Warning]: The debug input will be removed from ng-simple-slideshow in 1.3.0');
-    }
-    this._pointerService.bind(this.container);
-    this._slideSub = this._pointerService.slideEvent.subscribe((indexDirection: number) => {
-      this.onSlide(indexDirection, true);
-    });
-    this._clickSub = this._pointerService.clickEvent.subscribe(() => {
-      this.onClick();
-    });
-    if (this.noLoop) {
-      this.hideLeftArrow = true;
-    }
+    // if (this.debug !== undefined) {
+    //   console.warn('[Deprecation Warning]: The debug input will be removed from ng-simple-slideshow in 1.3.0');
+    // }
+    // console.log(this.container);
+    // this._pointerService.bind(this.container);
+    // this._slideSub = this._pointerService.slideEvent.subscribe((indexDirection: number) => {
+    //   this.onSlide(indexDirection, true);
+    // });
+    // this._clickSub = this._pointerService.clickEvent.subscribe(() => {
+    //   this.onClick();
+    // });
+    // if (this.noLoop) {
+    //   this.hideLeftArrow = true;
+    // }
   }
 
   ngOnDestroy() {
@@ -150,28 +194,28 @@ export class SlideshowComponent implements OnInit, DoCheck, OnChanges, OnDestroy
 
   ngDoCheck() {
     // if this is the first being called, create a copy of the input
-    if (this.imageUrls && this.imageUrls.length > 0) {
-      if (this._initial === true) {
-        this._urlCache = Array.from(this.imageUrls);
-      }
-
-      if (this._isHidden === true) {
-        this._renderer.removeStyle(this.container.nativeElement, 'display');
-        this._isHidden = false;
-      }
-
-      this.setSlides();
-    }
-    else if (this.hideOnNoSlides === true) {
-      this._renderer.setStyle(this.container.nativeElement, 'display', 'none');
-      this._isHidden = true;
-    }
-
-    this.setStyles();
-    this.handleAutoPlay();
-    this._pointerService.disableSwiping = this.disableSwiping;
-    this._pointerService.enableZoom = this.enableZoom;
-    this._pointerService.enablePan = this.enablePan;
+    // if (this.imageUrls && this.imageUrls.length > 0) {
+    //   if (this._initial === true) {
+    //     this._urlCache = Array.from(this.imageUrls);
+    //   }
+    //
+    //   if (this._isHidden === true) {
+    //     this._renderer.removeStyle(this.container.nativeElement, 'display');
+    //     this._isHidden = false;
+    //   }
+    //
+    //   this.setSlides();
+    // }
+    // else if (this.hideOnNoSlides === true) {
+    //   this._renderer.setStyle(this.container.nativeElement, 'display', 'none');
+    //   this._isHidden = true;
+    // }
+    //
+    // this.setStyles();
+    // this.handleAutoPlay();
+    // this._pointerService.disableSwiping = this.disableSwiping;
+    // this._pointerService.enableZoom = this.enableZoom;
+    // this._pointerService.enablePan = this.enablePan;
   }
 
   /**

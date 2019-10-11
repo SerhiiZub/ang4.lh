@@ -30,7 +30,7 @@ class State {
 
 @Injectable()
 export class PointerService {
-  // private _renderer: Renderer2;
+  private _renderer: Renderer2;
 
   //options
   private _disableSwiping = false;
@@ -72,12 +72,12 @@ export class PointerService {
 
   bind(el: ElementRef) {
     if (isPlatformBrowser(this.platform_id)) {
-      // el.nativeElement.addEventListener('pointerdown', this.pointerDown);
-    //   el.nativeElement.addEventListener('pointerup', this.pointerUp);
-    //   el.nativeElement.addEventListener('pointercancel', this.pointerUp);
-    //   el.nativeElement.addEventListener('pointerout', this.pointerUp);
-    //   el.nativeElement.addEventListener('pointerleave', this.pointerUp);
-    //   el.nativeElement.addEventListener('pointermove', this.pointerMove);
+      el.nativeElement.addEventListener('pointerdown', this.pointerDown);
+      el.nativeElement.addEventListener('pointerup', this.pointerUp);
+      el.nativeElement.addEventListener('pointercancel', this.pointerUp);
+      el.nativeElement.addEventListener('pointerout', this.pointerUp);
+      el.nativeElement.addEventListener('pointerleave', this.pointerUp);
+      el.nativeElement.addEventListener('pointermove', this.pointerMove);
     }
   }
 
@@ -101,10 +101,10 @@ export class PointerService {
   }
 
   constructor(
-    // rendererFactory: RendererFactory2,
+    rendererFactory: RendererFactory2,
     @Inject(PLATFORM_ID) private platform_id: any
   ) {
-    // this._renderer = rendererFactory.createRenderer(null, null);
+    this._renderer = rendererFactory.createRenderer(null, null);
   }
 
   private _pointerDown(e: PointerEvent) {

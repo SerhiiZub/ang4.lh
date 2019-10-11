@@ -3,10 +3,35 @@
 }
 
 .nav-container{
-    align-content: right;
+  background-color: #333;
+  height: 48px;
+  margin-top: -53px;
+  padding-top: 6px;
+  padding-right: 12px;
 }
 .clear { clear: both; }
 
 .nav li a{
     color: whitesmoke;
+}
+
+.nav-tabs .nav-link.active{
+  color: #333333;
+  opacity: .5;
+  margin-top: -1px;
+}
+
+.nav-tabs{
+  border-bottom: none;
+  margin-top: 1px;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+  border-color: gray;
+  border-bottom: solid 1px inherit;
+}
+
+.nav-tabs .nav-link.active:hover{
+  border-bottom: none;
+
 }

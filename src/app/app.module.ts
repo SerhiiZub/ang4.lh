@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { NavComponent } from './nav/nav.component';
 import { SlideshowModule } from '../../public_api';
 import { FormsModule } from "@angular/forms";
+import { LogoComponent } from './logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FormsModule } from "@angular/forms";
     HeaderComponent,
     FooterComponent,
     PageNotFoundComponent,
-    NavComponent
+    NavComponent,
+    LogoComponent
   ],
   imports: [
     BrowserModule,
