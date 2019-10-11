@@ -1,0 +1,12 @@
+.nav{
+    float: right;
+}
+
+.nav-container{
+    align-content: right;
+}
+.clear { clear: both; }
+
+.nav li a{
+    color: whitesmoke;
+}
