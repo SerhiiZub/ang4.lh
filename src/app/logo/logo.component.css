@@ -4,3 +4,32 @@
   left: 30px;
   height: 53px;
 }
+
+.brand{
+  position: relative;
+  top: 12px;
+  left: 30px;
+  /*height: 53px;*/
+  font-size: 45px;
+  width: 70px;
+  height: 70px;
+  /*padding: 10px;*/
+  display: inline-flex;
+}
+.brand span{
+  display: block;
+  min-width: 40px;
+  min-height: 70px;
+  text-align: center;
+  vertical-align: middle;
+}
+.brand .first{
+  background-color: #888888;
+  /*background-color: #333333;*/
+  color: whitesmoke;
+}
+.brand .second{
+  display: block;
+  background-color: whitesmoke;
+  color: #333333;
+}

@@ -3,7 +3,7 @@
 }
 
 .nav-container{
-  background-color: #333;
+  /*background-color: #333;*/
   height: 48px;
   margin-top: -53px;
   padding-top: 6px;
@@ -12,26 +12,50 @@
 .clear { clear: both; }
 
 .nav li a{
-    color: whitesmoke;
+    /*color: whitesmoke;*/
+  color: #8c8c8c;
+  /*color: #2a2a2a;*/
 }
 
 .nav-tabs .nav-link.active{
-  color: #333333;
-  opacity: .5;
-  margin-top: -1px;
+  /*color: #333333;*/
+  background-color: inherit;
+  color: #2a2a2a;
+  /*opacity: .5;*/
+  /*margin-top: -1px;*/
+  border-bottom: solid 2px #2a2a2a;
 }
 
 .nav-tabs{
-  border-bottom: none;
-  margin-top: 1px;
+  /*border: none;*/
+  /*border-bottom: none;*/
+  /*margin-top: 1px;*/
+  /*border-bottom: solid 2px #8c8c8c;*/
+}
+
+.nav-tabs .nav-link{
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: solid 2px #8c8c8c;
 }
 
 .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
-  border-color: gray;
-  border-bottom: solid 1px inherit;
+  /*border-color: inherit;*/
+  /*border-color: gray;*/
+  color: #5c5c5c;
+  border-bottom: solid 2px #5c5c5c;
 }
 
-.nav-tabs .nav-link.active:hover{
-  border-bottom: none;
+.nav-tabs .nav-link.active:hover, .nav-tabs .nav-link.active:focus{
+  /*border-bottom: none;*/
+  color: #2a2a2a;
+  border-bottom: solid 2px #2a2a2a;
+}
 
+.nav-tabs .nav-link {
+  /*border: none;*/
+  /*border: 1px solid transparent;*/
+  /*border-top-left-radius: .25rem;*/
+  /*border-top-right-radius: .25rem;*/
 }
